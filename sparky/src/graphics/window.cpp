@@ -2,6 +2,9 @@
 
 namespace sparky {
 	namespace graphics {
+
+		void windowResize(GLFWwindow *window, int width, int height); 
+
 		Window::Window(const char* name, int width, int height) {
 			m_name = name;
 			m_width = width;
@@ -28,6 +31,7 @@ namespace sparky {
 				return false;
 			}
 			glfwMakeContextCurrent(m_window);
+			glfwSetWindowSizeCallback(m_window, windowResize);
 			return true;
 		}
 
@@ -37,13 +41,17 @@ namespace sparky {
 
 		void Window::update() {
 			glfwPollEvents();
-			glfwGetFramebufferSize(m_window, &m_width, &m_height);
-			glViewport(0, 0, m_width, m_height);
+			//glfwGetFramebufferSize(m_window, &m_width, &m_height);
 			glfwSwapBuffers(m_window);
 		}
 
 		void Window::clear() const {
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		}
+
+		void windowResize(GLFWwindow *window, int width, int height) {
+			glViewport(0, 0, width, height);
+
 		}
 	}
 }
