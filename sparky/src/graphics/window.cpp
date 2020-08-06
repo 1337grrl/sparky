@@ -32,6 +32,10 @@ namespace sparky {
 			}
 			glfwMakeContextCurrent(m_window);
 			glfwSetWindowSizeCallback(m_window, windowResize);
+			if (glewInit() != GLEW_OK) {
+				std::cout << "Initializing GLEW failed." << std::endl;
+				return false;
+			}
 			return true;
 		}
 
